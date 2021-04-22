@@ -11,7 +11,6 @@
 <body>
     <div class="container mt-4">
 
-        <h2 class="text-center">Image Upload with Preview using in Laravel 8 - Tutsmake.com</h2>
 
         <form method="POST" enctype="multipart/form-data" id="upload-image" action="{{ route('imageuser') }}">
             @csrf

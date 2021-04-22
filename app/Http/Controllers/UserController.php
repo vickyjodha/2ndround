@@ -36,7 +36,14 @@ class UserController extends Controller
         $user->ip = $request->ip();
         $user->save();
         Notification::send($user, new MyFirstNotification($details));
-        return redirect()->to('home');
+
+
+        if (auth()->user()->is_admin == 1) {
+            return redirect()->to('user');
+        } else {
+            return redirect()->to('home');
+        }
+        // return redirect()->to('home');
     }
     public function register(RegisterRequest $request)
     {
@@ -57,10 +64,9 @@ class UserController extends Controller
         ]);
 
         $imageName = time() . '.' . $request->image->extension();
-        $images =  $request->image->move(public_path('images'), $imageName);
         $images = $request->image->storeAs('images', $imageName);
         $user->image = $images;
-        dd($user);
+        $user->save();
         return back()
             ->with('success', 'You have successfully upload image.')
             ->with('image', $imageName);
